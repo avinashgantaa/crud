@@ -4,6 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Auth, LoginPayload } from '../../service/auth';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +13,7 @@ import { Auth, LoginPayload } from '../../service/auth';
   styleUrl: './login.css',
 })
 export class Login implements OnInit {
+  router=inject(Router);
   fb = inject(FormBuilder);
   service = inject(Auth);
   loginForm!: FormGroup;
@@ -31,7 +33,7 @@ export class Login implements OnInit {
           );
         });
         if (isUserFound) {
-          console.log('Login Successful');
+          this.router.navigate(['/main']);
         } else {
           console.log('Invalid Credentials');
         }
