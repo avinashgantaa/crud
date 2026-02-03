@@ -1,9 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject,OnInit } from '@angular/core';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
-import {FormBuilder, ReactiveFormsModule} from '@angular/forms'
-import { Auth } from '../../service/auth';
+import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms'
+import { Auth, LoginPayload } from '../../service/auth';
 
 @Component({
   selector: 'app-login',
@@ -11,13 +11,17 @@ import { Auth } from '../../service/auth';
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-export class Login {
+export class Login implements OnInit {
   fb=inject(FormBuilder)
   service=inject(Auth)
-  loginForm=this.fb.group({
-    username:[''],
-    password:['']
-  })
+  loginForm!:FormGroup
+  ngOnInit(): void {
+    this.loginForm=this.fb.group({
+      username:[''],
+      password:['']
+    })
+
+  }
   login(){
     console.log(this.loginForm.value);
     this.service.login(this.loginForm.value).subscribe({
