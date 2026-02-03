@@ -2,16 +2,15 @@
   "users": [
     {
       "id": 1,
-      "name": "Alice",
+      "username": "Alice",
       "email": "alice@example.com",
       "password": "password123"
     },
     {
       "id": 2,
-      "name": "Bob",
+      "username": "Bob",
       "email": "bob@example.com",
       "password": "password456"
     }
-   
   ]
 }
