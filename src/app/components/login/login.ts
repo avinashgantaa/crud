@@ -15,7 +15,6 @@ export class Login implements OnInit {
   fb = inject(FormBuilder);
   service = inject(Auth);
   loginForm!: FormGroup;
-  allusers!: LoginPayload[];
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       username: [''],
@@ -23,21 +22,19 @@ export class Login implements OnInit {
     });
   }
   login() {
+    let { username, password } = this.loginForm.value;
     this.service.allusers().subscribe({
       next: (res) => {
-        this.allusers = res;
-        console.log(this.allusers);
-        console.log(this.loginForm.value);
-        this.allusers.forEach((user: LoginPayload) => {
-          if (user.username.toLowerCase() === this.loginForm.value.username.toLowerCase()) {
-            console.log('user found');
-            return 'login successful';
-          }
-          else{
-            console.log('user not found');
-            return 'login failed';
-          }
+        let isUserFound = res.find((user: LoginPayload) => {
+          return (
+            user.username.toLowerCase() === username.toLowerCase() && user.password === password
+          );
         });
+        if (isUserFound) {
+          console.log('Login Successful');
+        } else {
+          console.log('Invalid Credentials');
+        }
       },
       error: (err) => {
         console.log(err);
