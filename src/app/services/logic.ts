@@ -1,11 +1,16 @@
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root',
+})
 export class Logic {
-  isLoggedIn = false;
-  loginsuccess() {
-    this.isLoggedIn = true;
-    return this.isLoggedIn;
+  login() {
+    localStorage.setItem('isLoggedIn', 'true');
   }
-  loginout() {
-    this.isLoggedIn = false;
-    return this.isLoggedIn;
+  logout() {
+    localStorage.setItem('isLoggedIn', 'false');
+  }
+  loginsuccess() {
+   return localStorage.getItem('isLoggedIn') === 'true';
   }
 }

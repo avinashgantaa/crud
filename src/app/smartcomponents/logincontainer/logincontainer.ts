@@ -25,11 +25,11 @@ export class Logincontainer {
             user.username.toLowerCase() === username.toLowerCase() && user.password === password,
         );
         if (isValidUser) {
-          this.logic.loginsuccess();
+          this.logic.login();
           this.router.navigate(['/main']);
         }
         else {
-          alert('Invalid credentials or not an admin user.');
+          console.log('Invalid credentials or not an admin user.');
         }
       },
       error: (err) => {
