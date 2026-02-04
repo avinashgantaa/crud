@@ -14,9 +14,4 @@ export class Auth {
   allusers(): Observable<LoginPayload[]> {
     return this.http.get<LoginPayload[]>('http://localhost:3000/users');
   }
-
-  getUserRole(data:LoginPayload): Observable<string> {
-   return this.http.post<string>('http://localhost:3000/users', data);
-
-  }
 }

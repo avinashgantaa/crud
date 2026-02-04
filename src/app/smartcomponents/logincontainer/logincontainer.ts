@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Login } from '../../components/login/login';
 import { Auth } from '../../service/auth';
 import { Router } from '@angular/router';
+import { Logic } from '../../services/logic';
 
 @Component({
   selector: 'app-logincontainer',
@@ -12,6 +13,7 @@ import { Router } from '@angular/router';
 export class Logincontainer {
   router = inject(Router);
   service = inject(Auth);
+  logic = inject(Logic);
   onFormSubmit(formValue: any) {
     let isValidUser = false;
     let { username, password } = formValue.value;
@@ -23,6 +25,7 @@ export class Logincontainer {
             user.username.toLowerCase() === username.toLowerCase() && user.password === password,
         );
         if (isValidUser) {
+          this.logic.loginsuccess();
           this.router.navigate(['/main']);
         }
         else {
