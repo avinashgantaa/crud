@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,34 +13,20 @@ import {Router} from '@angular/router';
   styleUrl: './login.css',
 })
 export class Login implements OnInit {
+  @Output() form:EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
   router=inject(Router);
   fb = inject(FormBuilder);
   service = inject(Auth);
   loginForm!: FormGroup;
   ngOnInit(): void {
-    this.loginForm = this.fb.group({
-      username: [''],
-      password: [''],
-    });
+    this.loginForm =   this.fb.group({
+        username: [''],
+        password: [''],
+      });
+    }
+    
+    onSubmit() {
+    this.form.emit(this.loginForm);
   }
-  login() {
-    let { username, password } = this.loginForm.value;
-    this.service.allusers().subscribe({
-      next: (res) => {
-        let isUserFound = res.find((user: LoginPayload) => {
-          return (
-            user.username.toLowerCase() === username.toLowerCase() && user.password === password
-          );
-        });
-        if (isUserFound) {
-          this.router.navigate(['/main']);
-        } else {
-          console.log('Invalid Credentials');
-        }
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
+
 }
