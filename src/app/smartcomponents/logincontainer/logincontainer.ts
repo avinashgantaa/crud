@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { Login } from "../../components/login/login";
-import { Auth } from '../../service/auth'; 
-import {Router} from '@angular/router';
+import { Login } from '../../components/login/login';
+import { Auth } from '../../service/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-logincontainer',
@@ -10,24 +10,24 @@ import {Router} from '@angular/router';
   styleUrl: './logincontainer.css',
 })
 export class Logincontainer {
-  router=inject(Router);
-  service=inject(Auth);
+  router = inject(Router);
+  service = inject(Auth);
   onFormSubmit(formValue: any) {
-    console.log('Form submitted with value:', formValue.value);
     let isValidUser = false;
-    let {username, password} = formValue.value;
+    let { username, password } = formValue.value;
     this.service.allusers().subscribe({
-      next:(users)=>{
-        console.log('Users fetched:', users);
-        isValidUser=users.some(user=>user.username===username && user.password===password);
-        if(isValidUser){
+      next: (users) => {
+        isValidUser = users.some(
+          (user) =>
+            user.username.toLowerCase() === username.toLowerCase() && user.password === password,
+        );
+        if (isValidUser) {
           this.router.navigate(['/main']);
         }
-      },error:(err)=>{
+      },
+      error: (err) => {
         console.error('Error fetching users:', err);
-      }
-
-    })
+      },
+    });
   }
-
 }
