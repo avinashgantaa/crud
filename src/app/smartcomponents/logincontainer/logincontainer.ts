@@ -23,7 +23,10 @@ export class Logincontainer {
         if(isValidUser){
           this.router.navigate(['/main']);
         }
+      },error:(err)=>{
+        console.error('Error fetching users:', err);
       }
+
     })
   }
 
