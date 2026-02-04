@@ -15,6 +15,7 @@ export class Logincontainer {
   onFormSubmit(formValue: any) {
     let isValidUser = false;
     let { username, password } = formValue.value;
+    console.log(formValue.value);
     this.service.allusers().subscribe({
       next: (users) => {
         isValidUser = users.some(
@@ -23,6 +24,9 @@ export class Logincontainer {
         );
         if (isValidUser) {
           this.router.navigate(['/main']);
+        }
+        else {
+          alert('Invalid credentials or not an admin user.');
         }
       },
       error: (err) => {
